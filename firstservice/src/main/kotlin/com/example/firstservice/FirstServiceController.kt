@@ -21,7 +21,7 @@ class FirstServiceController(var env: Environment) {
     }
 
     @GetMapping("/message")
-    fun message(@RequestHeader("first-request") header: String?): String {
+    fun message(@RequestHeader("f-request") header: String): String {
         log.info(header)
         return "Hello World in First Service."
     }

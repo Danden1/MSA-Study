@@ -19,7 +19,7 @@ class SecondServiceController {
     }
 
     @GetMapping("/message")
-    fun message(@RequestHeader("second-request") header: String?): String {
+    fun message(@RequestHeader("s-request") header: String): String {
         log.info(header)
         return "Hello World in Second Service."
     }

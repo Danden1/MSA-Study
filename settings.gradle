@@ -5,4 +5,5 @@ rootProject.name = 'mas-infrean'
 include 'service-discovery', 'firstservice', 'secondservice', 'userservice'
 findProject(':secondservice:firstservice')?.name = 'firstservice'
 include 'apigateway-service'
+include 'apigateway-webflux-service'
 
