@@ -16,12 +16,29 @@ spring:
     gateway:
       server:
         webflux:
+          default-filters:
+            - name: GlobalFilter
+              args:
+                baseMessage: Spring Cloud Gateway Webflux Global Filter
+                preLogger: true
+                postLogger: true
           routes:
             - id: first-service
-              uri: http://localhost:8081/
+              uri: lb://MY-FIRST-SERVICE
               predicates:
                 - Path=/first-service/**
+              filters:
+                # 기존에 config 로 선언해둔 것을 지워야지, 여기의 filters가 적용이 됨!
+                - CustomFilter
             - id: second-service
-              uri: http://localhost:8082/
+              uri: lb://MY-SECOND-SERVICE
               predicates:
                 - Path=/second-service/**
+              filters:
+                # default 실행되고, 아래 필터들이 순서대로 실행됨.(우선 순위를 따로 지정하지 않은 경우)
+                - name: CustomFilter
+                - name: LoggingFilter
+                  args:
+                    baseMessage: hi
+                    preLogger: true
+                    postLogger: true
