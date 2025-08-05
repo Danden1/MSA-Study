@@ -46,6 +46,36 @@ spring cloud gateway는 nginx와 달리 필터 같은 기능을 넣을 수 있�
 좀 더 강의를 듣고 느낄 수 있을 것 같음.
 
 
+## 섹션 5 user service
 
+(25.08.05)코드 전부 따라치기에는 비효율적인 부분이 많아서, 일부 내용만 README에 정리할 예정.
 
+### spring security
+
+- Authentication : 인증
+- Authorization : 인가
+
+```java
+// security version 6.1 이상.
+// 이전 버전이랑 다르게 상속을 할 필요 없음
+import java.beans.BeanProperty;
+
+@Bean
+protected SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    http.csrf( csrf -> csrf.disable()) // csrf 비활성화
+        .authorizeHttpRequests(authorize -> authorize
+            .antMatchers("/h2-console/**").permitAll() // 특정 경로 허용
+            .anyRequest().authnticated() // 인증 필요
+        )
+        .httpBasic(Customizer.withDefaults()) // HTTP Basic 인증 사용
+        .headers((headers) -> headers.frameOptions(frammeOptions -> frameOptions.sameOrigin())); // H2 콘솔을 위한 프레임 옵션 설정
+}
+
+```
+
+### 섹션 5 후기
+
+마이크로 서비스에 대한 내용은 크게 없었음. 유저 서비스를 구현하는 내용이 대부분. 그래서 빠르게 스킵함.
+
+## 섹션 6 Catalog and Orders Service
 
